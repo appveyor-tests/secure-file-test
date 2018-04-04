@@ -8,6 +8,7 @@ install:
 - sh: ./appveyor-tools/secure-file -decrypt my-secret.txt.enc -secret $my_secret
 
 test_script:
-- ps: (Get-Content my-secret.txt)
+- ps: $originalValue = (Get-Content my-secret.txt)
+- ps: if($originalValue -ne 'Hello, world!') { throw "Decrypted string is not equal to the original one: $originalValue"; }
 
 build: off
