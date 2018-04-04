@@ -1,0 +1,12 @@
+environment:
+  my_secret:
+    secure: Q3rkG9Khjq7DVfHJMdDzTw==
+
+install:
+- ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
+- sh: ./appveyor-tools/secure-file -decrypt my-secret.txt.enc -secret $my_secret
+
+test_script:
+- ps: (Get-Content my-secret.txt)
+
+build: off
