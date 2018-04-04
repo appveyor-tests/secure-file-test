@@ -9,6 +9,6 @@ install:
 
 test_script:
 - ps: $originalValue = (Get-Content my-secret.txt)
-- ps: if($originalValue -ne 'Hello, world!') { throw "Decrypted string is not equal to the original one: $originalValue"; }
+- ps: if($originalValue -ne 'Hello, world!') { throw "Decrypted string is not equal to the original one!"; }
 
 build: off
