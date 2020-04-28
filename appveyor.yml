@@ -3,20 +3,8 @@ environment:
     secure: Q3rkG9Khjq7DVfHJMdDzTw==
 
 install:
-#- ps: (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1')
-#- ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
-- ps: |
-    $ProgressPreference='SilentlyContinue'
-    $tempdir = Join-Path $([System.IO.Path]::GetTempPath()) $([System.Guid]::NewGuid())
-    New-Item -ItemType Directory -Path $tempdir
-    $zipPath = Join-Path $tempdir 'secure-file.zip'
-    [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
-    (New-Object Net.WebClient).DownloadFile('https://github.com/appveyor/secure-file/releases/download/1.0.1/secure-file.zip', $zipPath)
-    Expand-Archive $zipPath -DestinationPath (Join-Path (pwd).path "appveyor-tools") -Force
-    if ($isLinux) {
-      chmod +x ./appveyor-tools/secure-file
-    }
-    del $tempdir -Recurse -Force
+- ps: (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1')
+- ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
 - cmd: appveyor-tools\secure-file -decrypt my-secret.txt.enc -secret %my_secret%
 - sh: ./appveyor-tools/secure-file -decrypt my-secret.txt.enc -secret $my_secret
 
